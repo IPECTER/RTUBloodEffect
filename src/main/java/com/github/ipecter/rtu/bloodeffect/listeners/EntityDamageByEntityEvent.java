@@ -31,9 +31,9 @@ public class EntityDamageByEntityEvent implements Listener {
                 Bukkit.getPluginManager().callEvent(event);
                 if (!event.isCancelled())
                     if (data.mobList.containsKey(e.getEntity().getType().toString())) {
-                        HitLocation.particle(e.getEntity().getWorld(), hitlocation, Integer.valueOf(this.configManager.getAmount()), data.mobList.get(e.getEntity().getType().toString()));
+                        HitLocation.particle(e.getEntity(), hitlocation, Integer.valueOf(this.configManager.getAmount()), data.mobList.get(e.getEntity().getType().toString()));
                     } else {
-                        HitLocation.particle(e.getEntity().getWorld(), hitlocation, Integer.valueOf(this.configManager.getAmount()), Material.REDSTONE_BLOCK);
+                        HitLocation.particle(e.getEntity(), hitlocation, Integer.valueOf(this.configManager.getAmount()), Material.REDSTONE_BLOCK);
                     }
             }
         }

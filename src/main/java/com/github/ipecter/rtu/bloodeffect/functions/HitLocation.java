@@ -2,15 +2,9 @@ package com.github.ipecter.rtu.bloodeffect.functions;
 
 import com.github.ipecter.rtu.bloodeffect.Main;
 import com.github.ipecter.rtu.bloodeffect.util.ConfigManager;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Slime;
+import org.bukkit.entity.*;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
@@ -80,7 +74,10 @@ public class HitLocation {
 
     public static void particle(World world, Location hitlocation, Integer amount, Material material) {
         BlockData blockCrackData = material.createBlockData();
-        world.spawnParticle(Particle.BLOCK_CRACK, hitlocation.getX(), hitlocation.getY(), hitlocation.getZ(), amount.intValue(), blockCrackData);
+        for (Player player : Bukkit.getOnlinePlayers() ) {
+            if ()
+            player.spawnParticle(Particle.BLOCK_CRACK, hitlocation.getX(), hitlocation.getY(), hitlocation.getZ(), amount.intValue(), blockCrackData);
+        }
     }
 
     public static boolean isNoBoundingBox(Location loc, Entity victim) {
@@ -92,7 +89,7 @@ public class HitLocation {
             if (distance <= 1.0D)
                 return true;
         } else {
-            Slime slime = (Slime)victim;
+            Slime slime = (Slime) victim;
             if (slime.getSize() == 1) {
                 double distance = loc.distance(victim.getLocation().add(0.0D, 0.25D, 0.0D));
                 if (distance <= 1.0D)

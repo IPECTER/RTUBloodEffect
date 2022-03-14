@@ -1,0 +1,5 @@
+name: RTUBloodEffect
+version: '${version}'
+main: com.github.ipecter.rtu.bloodeffect.Main
+api-version: 1.13
+authors: [ IPECTER ]

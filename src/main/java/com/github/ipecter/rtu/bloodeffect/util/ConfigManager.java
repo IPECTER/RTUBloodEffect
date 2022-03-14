@@ -14,8 +14,8 @@ import java.io.OutputStream;
 
 public class ConfigManager {
     private final Plugin plugin;
-
     private Data data = Data.getInstance();
+
     public ConfigManager(Plugin plugin) {
         this.plugin = plugin;
         if (!plugin.getDataFolder().exists())
@@ -41,7 +41,7 @@ public class ConfigManager {
     private File copyResource(Plugin plugin, String resource) {
         File folder = plugin.getDataFolder();
         File resourceFile = new File(folder, resource);
-        if (!resourceFile.exists())
+        if (!resourceFile.exists()) {
             try {
                 resourceFile.createNewFile();
                 InputStream in = plugin.getResource(resource);
@@ -72,35 +72,8 @@ public class ConfigManager {
             } catch (Exception e) {
                 Bukkit.getLogger().severe("Error copying file " + resource);
             }
+        }
         return resourceFile;
     }
-    private double accuracy;
 
-    private int amount;
-
-    private boolean rhp;
-
-    public double getAccuracy() {
-        return this.accuracy;
-    }
-
-    public void setAccuracy(double accuracy) {
-        this.accuracy = accuracy;
-    }
-
-    public int getAmount() {
-        return this.amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    public boolean isRhp() {
-        return this.rhp;
-    }
-
-    public void setRhp(boolean rhp) {
-        this.rhp = rhp;
-    }
 }

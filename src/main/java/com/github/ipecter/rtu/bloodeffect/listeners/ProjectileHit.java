@@ -10,15 +10,17 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.ProjectileHitEvent;
 
-public class ProjectileHitEvent implements Listener {
+public class ProjectileHit implements Listener {
     private Data data = Data.getInstance();
+
     @EventHandler
-    public void onProjectileHit(org.bukkit.event.entity.ProjectileHitEvent e) {
+    public void onProjectileHit(ProjectileHitEvent e) {
         if (e.getHitEntity() != null && e.getHitEntity() instanceof LivingEntity) {
-            Location hitlocation = HitLocation.getHitLocation_Projectile((Entity)e.getEntity(), e.getHitEntity(), Double.valueOf(data.getAccuracy()));
+            Location hitlocation = HitLocation.getHitLocation_Projectile((Entity) e.getEntity(), e.getHitEntity(), Double.valueOf(data.getAccuracy()));
             if (hitlocation != null) {
-                BloodEvent event = new BloodEvent((Entity)e.getEntity(), e.getHitEntity(), hitlocation);
+                BloodEvent event = new BloodEvent((Entity) e.getEntity(), e.getHitEntity(), hitlocation);
                 Bukkit.getPluginManager().callEvent(event);
                 if (!event.isCancelled())
                     if (data.mobList.containsKey(e.getHitEntity().getType().toString())) {

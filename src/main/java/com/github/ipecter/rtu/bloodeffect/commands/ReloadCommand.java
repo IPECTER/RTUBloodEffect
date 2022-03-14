@@ -6,20 +6,16 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.plugin.Plugin;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class ReloadCommand implements CommandExecutor, TabCompleter {
-    private ConfigManager configManager;
-
-    public List<String> keys2 = new ArrayList<>();
-
-    public ReloadCommand(ConfigManager configManager) {
-        this.configManager = configManager;
+    private Plugin plugin;
+    public ReloadCommand(Plugin plugin){
+        this.plugin = plugin;
     }
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
         if (args.length == 0) {
@@ -27,8 +23,8 @@ public class ReloadCommand implements CommandExecutor, TabCompleter {
             return true;
         }
         if (args[0].equalsIgnoreCase("reload")) {
-            if (sender.hasPermission("rtube.reload")){
-                this.configManager.loadConfig();
+            if (sender.hasPermission("rtube.reload")) {
+                new ConfigManager(plugin);
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&f[ &b&lRTU &6&lBE &f] &aComplete reload config"));
                 return true;
             }

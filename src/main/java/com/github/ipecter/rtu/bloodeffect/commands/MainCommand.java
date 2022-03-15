@@ -7,7 +7,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,15 +17,14 @@ public class MainCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
         if (args.length == 0) {
-            if (sender.hasPermission("rtube.reload")){
+            if (sender.hasPermission("rtube.reload")) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&f[ &b&lRTU &6&lBE &f] &c/rtube on/off - &7Enable or Disable Particle"));
-            }
-            else{
+            } else {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&f[ &b&lRTU &6&lBE &f] &c/rtube on/off"));
             }
             return true;
         }
-        if (args.length == 1){
+        if (args.length == 1) {
             if (args[0].equalsIgnoreCase("reload")) {
                 if (sender.hasPermission("rtube.reload")) {
                     ConfigManager.getInstance().loadConfig();
@@ -39,20 +37,18 @@ public class MainCommand implements CommandExecutor, TabCompleter {
             } else if (args[0].equalsIgnoreCase("on")) {
                 if (sender instanceof Player) {
                     cm.savePlayerData((Player) sender, true);
-                }
-                else{
+                } else {
 
                 }
             } else if (args[0].equalsIgnoreCase("off")) {
-                if (sender instanceof Player){
+                if (sender instanceof Player) {
                     cm.savePlayerData((Player) sender, false);
-                }
-                else{
+                } else {
 
                 }
             }
         }
-        if (args.length == 2){
+        if (args.length == 2) {
 
         }
 

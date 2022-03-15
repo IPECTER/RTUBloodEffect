@@ -15,21 +15,22 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class EntityDamageByEntity implements Listener {
     private Data data = Data.getInstance();
+    private HitLocation hl = HitLocation.getInstance();
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
         Entity victim = e.getEntity();
         Entity attacker = e.getDamager();
         if (!(attacker instanceof Projectile) && attacker instanceof LivingEntity && victim instanceof LivingEntity) {
-            Location hitlocation = HitLocation.getHitLocation_Battle((LivingEntity) attacker, (LivingEntity) victim, Double.valueOf(data.getAccuracy()));
+            Location hitlocation = hl.getHitLocation_Battle((LivingEntity) attacker, (LivingEntity) victim, Double.valueOf(data.getAccuracy()));
             if (hitlocation != null) {
                 BloodEvent event = new BloodEvent(attacker, victim, hitlocation);
                 Bukkit.getPluginManager().callEvent(event);
                 if (!event.isCancelled())
                     if (data.mobList.containsKey(e.getEntity().getType().toString())) {
-                        HitLocation.particle(e.getEntity().getWorld(), hitlocation, Integer.valueOf(data.getAmount()), data.mobList.get(e.getEntity().getType().toString()));
+                        hl.particle(e.getEntity().getWorld(), hitlocation, Integer.valueOf(data.getAmount()), data.mobList.get(e.getEntity().getType().toString()));
                     } else {
-                        HitLocation.particle(e.getEntity().getWorld(), hitlocation, Integer.valueOf(data.getAmount()), Material.REDSTONE_BLOCK);
+                        hl.particle(e.getEntity().getWorld(), hitlocation, Integer.valueOf(data.getAmount()), Material.REDSTONE_BLOCK);
                     }
             }
         }

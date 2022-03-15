@@ -13,23 +13,28 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class ConfigManager {
-    private final Plugin plugin;
     private Data data = Data.getInstance();
 
-    public ConfigManager(Plugin plugin) {
-        this.plugin = plugin;
-        if (!plugin.getDataFolder().exists())
-            plugin.getDataFolder().mkdirs();
-        loadConfig();
+    private ConfigManager() {
     }
 
-    public void loadConfig() {
-        File file = copyResource(this.plugin, "setting.yml");
+    private static class LazyHolder {
+        public static final ConfigManager INSTANCE = new ConfigManager();
+    }
+
+    public static ConfigManager getInstance() {
+        return ConfigManager.LazyHolder.INSTANCE;
+    }
+
+    public void loadConfig(Plugin plugin) {
+        if (!plugin.getDataFolder().exists())
+            plugin.getDataFolder().mkdirs();
+        File file = copyResource(plugin, "setting.yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         data.setRhp(config.getBoolean("remove-hart-particle", true));
         data.setAccuracy(config.getDouble("accuracy", 0.5D));
         data.setAmount(config.getInt("amount", 15));
-        File file2 = copyResource(this.plugin, "mobs.yml");
+        File file2 = copyResource(plugin, "mobs.yml");
         YamlConfiguration config2 = YamlConfiguration.loadConfiguration(file2);
         if (config2.isConfigurationSection("mobs")) {
             ConfigurationSection section = config2.getConfigurationSection("mobs");

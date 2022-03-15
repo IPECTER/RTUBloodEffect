@@ -24,7 +24,7 @@ public class ReloadCommand implements CommandExecutor, TabCompleter {
         }
         if (args[0].equalsIgnoreCase("reload")) {
             if (sender.hasPermission("rtube.reload")) {
-                new ConfigManager(plugin);
+                ConfigManager.getInstance().loadConfig(plugin);
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&f[ &b&lRTU &6&lBE &f] &aComplete reload config"));
                 return true;
             }

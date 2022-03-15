@@ -2,6 +2,7 @@ package com.github.ipecter.rtu.bloodeffect;
 
 import com.github.ipecter.rtu.bloodeffect.commands.MainCommand;
 import com.github.ipecter.rtu.bloodeffect.listeners.EntityDamageByEntity;
+import com.github.ipecter.rtu.bloodeffect.listeners.PlayerJoin;
 import com.github.ipecter.rtu.bloodeffect.listeners.ProjectileHit;
 import com.github.ipecter.rtu.bloodeffect.util.ConfigManager;
 import org.bukkit.Bukkit;
@@ -12,7 +13,7 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        Bukkit.getPluginCommand("rtube").setExecutor(new MainCommand(this));
+        Bukkit.getPluginCommand("rtube").setExecutor(new MainCommand());
         ConfigManager.getInstance().loadConfig();
     }
 
@@ -24,5 +25,6 @@ public final class Main extends JavaPlugin {
     public void registerEvents() {
         Bukkit.getPluginManager().registerEvents(new EntityDamageByEntity(), this);
         Bukkit.getPluginManager().registerEvents(new ProjectileHit(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerJoin(), this);
     }
 }

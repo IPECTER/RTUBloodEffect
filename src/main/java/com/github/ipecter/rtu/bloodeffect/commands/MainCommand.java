@@ -13,12 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainCommand implements CommandExecutor, TabCompleter {
-    private Plugin plugin;
     private ConfigManager cm = ConfigManager.getInstance();
-
-    public MainCommand(Plugin plugin) {
-        this.plugin = plugin;
-    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {

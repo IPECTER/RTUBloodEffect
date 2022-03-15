@@ -1,6 +1,7 @@
 package com.github.ipecter.rtu.bloodeffect.util;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,5 +49,6 @@ public class Data {
     }
 
     public Map<String, Material> mobList = new HashMap<>();
+    public Map<Player, Boolean> playerDataParticle = new HashMap<>();
 
 }

@@ -1,6 +1,6 @@
 package com.github.ipecter.rtu.bloodeffect.functions;
 
-import com.github.ipecter.rtu.bloodeffect.util.ConfigManager;
+import com.github.ipecter.rtu.bloodeffect.util.Data;
 import org.bukkit.*;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 public class HitLocation {
+    private Data data = Data.getInstance();
     private HitLocation() {
     }
 
@@ -86,11 +87,10 @@ public class HitLocation {
         BlockData blockCrackData = material.createBlockData();
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (player.getWorld() == world) {
-                player.spawnParticle(Particle.BLOCK_CRACK, hitlocation.getX(), hitlocation.getY(), hitlocation.getZ(), amount.intValue(), blockCrackData);
-
+                if (data.playerDataParticle.get(player)){
+                    player.spawnParticle(Particle.BLOCK_CRACK, hitlocation.getX(), hitlocation.getY(), hitlocation.getZ(), amount.intValue(), blockCrackData);
+                }
             }
         }
     }
-
-
 }

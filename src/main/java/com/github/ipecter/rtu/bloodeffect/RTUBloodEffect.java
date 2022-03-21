@@ -4,17 +4,17 @@ import com.github.ipecter.rtu.bloodeffect.commands.MainCommand;
 import com.github.ipecter.rtu.bloodeffect.listeners.EntityDamageByEntity;
 import com.github.ipecter.rtu.bloodeffect.listeners.PlayerJoin;
 import com.github.ipecter.rtu.bloodeffect.listeners.ProjectileHit;
-import com.github.ipecter.rtu.bloodeffect.util.ConfigManager;
+import com.github.ipecter.rtu.bloodeffect.util.FileManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class Main extends JavaPlugin {
+public final class RTUBloodEffect extends JavaPlugin {
 
     @Override
     public void onEnable() {
         // Plugin startup logic
         Bukkit.getPluginCommand("rtube").setExecutor(new MainCommand());
-        ConfigManager.getInstance().loadConfig();
+        FileManager.getInstance().loadConfig();
     }
 
     @Override

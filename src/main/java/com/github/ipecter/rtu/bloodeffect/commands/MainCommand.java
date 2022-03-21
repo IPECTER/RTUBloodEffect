@@ -1,6 +1,6 @@
 package com.github.ipecter.rtu.bloodeffect.commands;
 
-import com.github.ipecter.rtu.bloodeffect.util.ConfigManager;
+import com.github.ipecter.rtu.bloodeffect.util.FileManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainCommand implements CommandExecutor, TabCompleter {
-    private ConfigManager cm = ConfigManager.getInstance();
+    private FileManager cm = FileManager.getInstance();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
@@ -27,7 +27,7 @@ public class MainCommand implements CommandExecutor, TabCompleter {
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("reload")) {
                 if (sender.hasPermission("rtube.reload")) {
-                    ConfigManager.getInstance().loadConfig();
+                    FileManager.getInstance().loadConfig();
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&f[ &b&lRTU &6&lBE &f] &aComplete reload config"));
                     return true;
                 } else {

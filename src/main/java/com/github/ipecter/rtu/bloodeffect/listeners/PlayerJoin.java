@@ -1,12 +1,12 @@
 package com.github.ipecter.rtu.bloodeffect.listeners;
 
-import com.github.ipecter.rtu.bloodeffect.util.ConfigManager;
+import com.github.ipecter.rtu.bloodeffect.util.FileManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoin implements Listener {
-    private ConfigManager cm = ConfigManager.getInstance();
+    private FileManager cm = FileManager.getInstance();
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {

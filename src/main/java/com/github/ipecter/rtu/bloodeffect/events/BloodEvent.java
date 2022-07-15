@@ -1,6 +1,7 @@
 package com.github.ipecter.rtu.bloodeffect.events;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -16,12 +17,15 @@ public class BloodEvent extends Event implements Cancellable {
 
     private Location bloodloc;
 
+    private Material material;
+
     private boolean isCancelled;
 
-    public BloodEvent(Entity attacker, Entity victim, Location bloodloc) {
+    public BloodEvent(Entity attacker, Entity victim, Location bloodloc, Material material) {
         this.attacker = attacker;
         this.victim = victim;
         this.bloodloc = bloodloc;
+        this.material = material;
     }
 
     public Entity getAttacker() {
@@ -34,6 +38,10 @@ public class BloodEvent extends Event implements Cancellable {
 
     public Location getBloodLocation() {
         return this.bloodloc;
+    }
+
+    public Material getMaterial() {
+        return this.material;
     }
 
     public HandlerList getHandlers() {

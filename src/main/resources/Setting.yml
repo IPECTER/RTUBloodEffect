@@ -1,0 +1,7 @@
+particle:
+  #It needs Protocollib
+  #이것은 Protocollib이 필요합니다
+  disableVanillaDamage: true
+  defaultMaterial: REDSTONE
+  accuracy: 0.5
+  amount: 5

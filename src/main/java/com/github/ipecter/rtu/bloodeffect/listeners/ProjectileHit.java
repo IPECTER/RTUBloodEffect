@@ -2,7 +2,6 @@ package com.github.ipecter.rtu.bloodeffect.listeners;
 
 import com.github.ipecter.rtu.bloodeffect.events.BloodEvent;
 import com.github.ipecter.rtu.bloodeffect.functions.HitLocation;
-import com.github.ipecter.rtu.bloodeffect.util.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,7 +12,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
 
 public class ProjectileHit implements Listener {
-    private Data data = Data.getInstance();
     private HitLocation hl = HitLocation.getInstance();
 
     @EventHandler

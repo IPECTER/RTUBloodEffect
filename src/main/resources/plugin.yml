@@ -2,4 +2,24 @@ name: RTUBloodEffect
 version: '${version}'
 main: com.github.ipecter.rtu.bloodeffect.RTUBloodEffect
 api-version: 1.13
-authors: [ IPECTER ]
+softdepend: [ PlaceholderAPI ]
+authors: [ IPECTER (이팩터), ]
+description: RTU PLUGINS - Controling Available Command, TabComletion Plugin
+website: https://github.com/IPECTER/RTUCommandControl
+commands:
+  rtube:
+    usage: /rtube reload
+    description: /rtube reload
+permissions:
+  rtube.reload:
+    description: Plugin reload
+    default: op
+  rtube.use:
+    description: Blood Effect Using
+    default: true
+  rtube.toggle:
+    description: Blood Effect Toggle
+    default: true
+  rtube.onoff:
+    description: Blood Effect ON/OFF Status
+    default: true

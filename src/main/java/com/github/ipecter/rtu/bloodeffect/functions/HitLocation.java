@@ -1,6 +1,5 @@
 package com.github.ipecter.rtu.bloodeffect.functions;
 
-import com.github.ipecter.rtu.bloodeffect.util.Data;
 import org.bukkit.*;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
@@ -9,19 +8,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 public class HitLocation {
-    private Data data = Data.getInstance();
-    private HitLocation() {
-    }
 
-    private static class LazyHolder {
-        public static final HitLocation INSTANCE = new HitLocation();
-    }
-
-    public static HitLocation getInstance() {
-        return HitLocation.LazyHolder.INSTANCE;
-    }
-
-    public final Location getHitLocation_Battle(LivingEntity attacker, LivingEntity victim, Double accuracy) {
+    public static final Location getHitLocation_Attack(LivingEntity attacker, LivingEntity victim, Double accuracy) {
         Location Loc1 = attacker.getEyeLocation();
         Location Loc2 = attacker.getEyeLocation().add(attacker.getLocation().getDirection().multiply(10));
         Vector vector = getDirectionBetweenLocations(Loc1, Loc2);
@@ -49,7 +37,7 @@ public class HitLocation {
         return null;
     }
 
-    public final Location getHitLocation_Projectile(Entity projectile, Entity victim, Double accuracy) {
+    public static final Location getHitLocation_Projectile(Entity projectile, Entity victim, Double accuracy) {
         Location Loc1 = projectile.getLocation().add(projectile.getVelocity().multiply(-3));
         Location Loc2 = projectile.getLocation().add(projectile.getVelocity().multiply(3));
         Vector vector = getDirectionBetweenLocations(Loc1, Loc2);
@@ -77,19 +65,18 @@ public class HitLocation {
         return null;
     }
 
-    private final Vector getDirectionBetweenLocations(Location Start, Location End) {
+    private static final Vector getDirectionBetweenLocations(Location Start, Location End) {
         Vector from = Start.toVector();
         Vector to = End.toVector();
         return to.subtract(from);
     }
 
-    public final void particle(World world, Location hitlocation, Integer amount, Material material) {
+
+    public static final void particle(World world, Location hitlocation, Integer amount, Material material) {
         BlockData blockCrackData = material.createBlockData();
         for (Player player : Bukkit.getOnlinePlayers()) {
-            if (player.getWorld() == world) {
-                if (data.playerDataParticle.get(player)){
-                    player.spawnParticle(Particle.BLOCK_CRACK, hitlocation.getX(), hitlocation.getY(), hitlocation.getZ(), amount.intValue(), blockCrackData);
-                }
+            if (player.getWorld() == world && player.hasPermission("rtube.use") && player.hasPermission("rtube.onoff")) {
+                player.spawnParticle(Particle.BLOCK_CRACK, hitlocation.getX(), hitlocation.getY(), hitlocation.getZ(), amount.intValue(), blockCrackData);
             }
         }
     }

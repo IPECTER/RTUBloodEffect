@@ -1,0 +1,7 @@
+prefix: ""
+reloadMsg: "&aCompleted reloading config"
+commandWrongUsage: "&cWrong Usage&7, &fUse /rtucc on&7/&foff"
+commandWrongUsageOp: "&cWrong Usage&7, &fUse /rtucc reload&7/&fon&7/&foff"
+noPermission: "&cYou don't have permission"
+bloodEffectOn: "&fBlood Effect &aON"
+bloodEffectOff: "&fBlood Effect &cOFF"

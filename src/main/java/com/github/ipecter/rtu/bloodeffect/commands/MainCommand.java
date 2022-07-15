@@ -38,7 +38,6 @@ public class MainCommand implements CommandExecutor, TabCompleter {
                 if (sender instanceof Player) {
                     cm.savePlayerData((Player) sender, true);
                 } else {
-
                 }
             } else if (args[0].equalsIgnoreCase("off")) {
                 if (sender instanceof Player) {

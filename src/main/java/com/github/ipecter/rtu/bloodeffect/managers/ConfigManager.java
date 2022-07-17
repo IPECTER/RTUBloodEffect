@@ -27,9 +27,12 @@ public class ConfigManager {
     private String reloadMsg = "";
     private String commandWrongUsage = "";
     private String commandWrongUsageOp = "";
+    private String commandWrongUsageConsole = "";
     private String noPermission = "";
     private String bloodEffectON = "";
     private String bloodEffectOFF = "";
+    private String bloodEffectOtherON = "";
+    private String bloodEffectOtherOFF = "";
 
     public ConfigManager() {
     }
@@ -122,6 +125,14 @@ public class ConfigManager {
         this.commandWrongUsageOp = commandWrongUsageOp;
     }
 
+    public String getCommandWrongUsageConsole() {
+        return commandWrongUsageConsole;
+    }
+
+    public void setCommandWrongUsageConsole(String commandWrongUsageConsole) {
+        this.commandWrongUsageConsole = commandWrongUsageConsole;
+    }
+
     public String getNoPermission() {
         return noPermission;
     }
@@ -146,6 +157,22 @@ public class ConfigManager {
         this.bloodEffectOFF = bloodEffectOFF;
     }
 
+    public String getBloodEffectOtherON() {
+        return bloodEffectOtherON;
+    }
+
+    public void setBloodEffectOtherON(String bloodEffectOtherON) {
+        this.bloodEffectOtherON = bloodEffectOtherON;
+    }
+
+    public String getBloodEffectOtherOFF() {
+        return bloodEffectOtherOFF;
+    }
+
+    public void setBloodEffectOtherOFF(String bloodEffectOtherOFF) {
+        this.bloodEffectOtherOFF = bloodEffectOtherOFF;
+    }
+
     public void initConfigFiles() {
         initSetting(RTUUtilAPI.getFileManager().copyResource("Setting.yml"));
         initMessage(RTUUtilAPI.getFileManager().copyResource("Translations", "Locale_" + locale + ".yml"));
@@ -160,6 +187,8 @@ public class ConfigManager {
         particleDisableVanillaDamage = config.getBoolean("particle.disableVanillaDamage");
         Material material = Material.getMaterial(config.getString("particle.defaultMaterial"));
         defaultMaterial = material != null ? material : Material.REDSTONE;
+        accuracy = config.getDouble("particle.accuracy");
+        amount = config.getInt("particle.amount");
     }
 
     private void initMessage(File file) {
@@ -168,9 +197,12 @@ public class ConfigManager {
         reloadMsg = config.getString("reloadMsg");
         commandWrongUsage = config.getString("commandWrongUsage");
         commandWrongUsageOp = config.getString("commandWrongUsageOp");
+        commandWrongUsageConsole = config.getString("commandWrongUsageConsole");
         noPermission = config.getString("noPermission");
         bloodEffectON = config.getString("bloodEffectON");
         bloodEffectOFF = config.getString("bloodEffectOFF");
+        bloodEffectOtherON = config.getString("bloodEffectOtherON");
+        bloodEffectOtherOFF = config.getString("bloodEffectOtherOFF");
 
         RTUUtilAPI.getFileManager().copyResource("Translations", "Locale_EN.yml");
         RTUUtilAPI.getFileManager().copyResource("Translations", "Locale_KR.yml");

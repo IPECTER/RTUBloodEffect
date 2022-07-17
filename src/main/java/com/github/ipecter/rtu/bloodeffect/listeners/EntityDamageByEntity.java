@@ -17,15 +17,18 @@ import java.util.Map;
 
 public class EntityDamageByEntity implements Listener {
 
+    private ConfigManager configManager = ConfigManager.getInstance();
+
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
+        if (!configManager.isEnablePlugin()) return;
         Entity victim = e.getEntity();
         Entity attacker = e.getDamager();
         if (!(attacker instanceof Projectile) && attacker instanceof LivingEntity && victim instanceof LivingEntity) {
-            Location hitlocation = HitLocation.getHitLocation_Attack((LivingEntity) attacker, (LivingEntity) victim, Double.valueOf(ConfigManager.getInstance().getAccuracy()));
+            Location hitlocation = HitLocation.getHitLocation_Attack((LivingEntity) attacker, (LivingEntity) victim, Double.valueOf(configManager.getAccuracy()));
             if (hitlocation != null) {
-                Material material = ConfigManager.getInstance().getDefaultMaterial();
-                Map<String, String> mobMaterial = ConfigManager.getInstance().getMobMaterial();
+                Material material = configManager.getDefaultMaterial();
+                Map<String, String> mobMaterial = configManager.getMobMaterial();
                 String entityTypeName = e.getEntity().getType().toString();
                 if (mobMaterial.keySet().contains(entityTypeName)) {
                     Material findMaterial = Material.getMaterial(mobMaterial.get(entityTypeName));
@@ -34,7 +37,7 @@ public class EntityDamageByEntity implements Listener {
                 BloodEvent event = new BloodEvent(attacker, victim, hitlocation, material);
                 Bukkit.getPluginManager().callEvent(event);
                 if (!event.isCancelled())
-                    HitLocation.particle(e.getEntity().getWorld(), hitlocation, Integer.valueOf(ConfigManager.getInstance().getAmount()), material);
+                    HitLocation.particle(e.getEntity().getWorld(), hitlocation, Integer.valueOf(configManager.getAmount()), material);
             }
         }
     }

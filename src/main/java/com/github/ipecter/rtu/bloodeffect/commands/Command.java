@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Command implements CommandExecutor, TabCompleter {
 
@@ -31,7 +32,7 @@ public class Command implements CommandExecutor, TabCompleter {
             if (args.length >= 2 && Bukkit.getPlayer(args[1]) != null) {
                 if (sender.hasPermission("rtube.toggle.other")) {
                     setStatus(Bukkit.getPlayer(args[1]), true);
-                    sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getPrefix() + "&f" + args[1] + configManager.getBloodEffectON()));
+                    sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getPrefix() + "&f" + args[1] + configManager.getBloodEffectOtherON()));
                 } else {
                     sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getPrefix() + configManager.getNoPermission()));
                 }
@@ -43,6 +44,24 @@ public class Command implements CommandExecutor, TabCompleter {
                     sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getPrefix() + configManager.getCommandWrongUsageConsole()));
                 }
             }
+            return true;
+        } else if (args.length >= 1 && args[0].equalsIgnoreCase("off")) {
+            if (args.length >= 2 && Bukkit.getPlayer(args[1]) != null) {
+                if (sender.hasPermission("rtube.toggle.other")) {
+                    setStatus(Bukkit.getPlayer(args[1]), false);
+                    sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getPrefix() + "&f" + args[1] + configManager.getBloodEffectOtherOFF()));
+                } else {
+                    sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getPrefix() + configManager.getNoPermission()));
+                }
+            } else {
+                if (sender instanceof Player) {
+                    setStatus((Player) sender, false);
+                    sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getPrefix() + configManager.getBloodEffectOFF()));
+                } else {
+                    sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getPrefix() + configManager.getCommandWrongUsageConsole()));
+                }
+            }
+            return true;
         } else {
             sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getPrefix() + configManager.getCommandWrongUsage()));
             return true;
@@ -50,13 +69,23 @@ public class Command implements CommandExecutor, TabCompleter {
     }
 
     private void setStatus(Player player, boolean value) {
-        RTUUtilAPI.getPermissionManager().setPerm(player, "rtube.onoff", value);
+        RTUUtilAPI.getPermissionManager().setPerm(player, "rtube.status", value);
     }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, org.bukkit.command.Command command, String alias, String[] args) {
-        if (args.length == 1 && sender.hasPermission("rtube.reload")) {
-            return Arrays.asList("reload");
+        if (args.length == 1) {
+            List<String> list = Arrays.asList();
+            if (sender.hasPermission("rtube.reload")) {
+                list.add("reload");
+            }
+            if (sender.hasPermission("rtube.toggle")) {
+                list.add("on");
+                list.add("off");
+            }
+            return list;
+        } else if (args.length == 2) {
+            return Bukkit.getOnlinePlayers().stream().map(player -> player.getName()).collect(Collectors.toList());
         }
         return Arrays.asList();
     }

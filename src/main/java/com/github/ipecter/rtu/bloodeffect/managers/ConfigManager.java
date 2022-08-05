@@ -20,7 +20,7 @@ public class ConfigManager {
     private boolean particleDisableVanillaDamage = true;
     private int amount = 0;
     private double accuracy = 0.5;
-    private Material defaultMaterial = Material.REDSTONE;
+    private Material defaultMaterial = Material.REDSTONE_BLOCK;
     private String locale = "EN";
     private Map<String, String> mobMaterial = Collections.synchronizedMap(new HashMap<>());
     private String prefix = IridiumColorAPI.process("<GRADIENT:a83232>[ RTUBloodEffect ]</GRADIENT:a3a3a3> ");
@@ -87,6 +87,14 @@ public class ConfigManager {
 
     public void setLocale(String locale) {
         this.locale = locale;
+    }
+
+    public boolean isParticleDisableVanillaDamage() {
+        return particleDisableVanillaDamage;
+    }
+
+    public void setParticleDisableVanillaDamage(boolean particleDisableVanillaDamage) {
+        this.particleDisableVanillaDamage = particleDisableVanillaDamage;
     }
 
     public Map<String, String> getMobMaterial() {
@@ -199,10 +207,10 @@ public class ConfigManager {
         commandWrongUsageOp = config.getString("commandWrongUsageOp");
         commandWrongUsageConsole = config.getString("commandWrongUsageConsole");
         noPermission = config.getString("noPermission");
-        bloodEffectON = config.getString("bloodEffectON");
-        bloodEffectOFF = config.getString("bloodEffectOFF");
-        bloodEffectOtherON = config.getString("bloodEffectOtherON");
-        bloodEffectOtherOFF = config.getString("bloodEffectOtherOFF");
+        bloodEffectON = config.getString("bloodEffectOn");
+        bloodEffectOFF = config.getString("bloodEffectOff");
+        bloodEffectOtherON = config.getString("bloodEffectOtherOn");
+        bloodEffectOtherOFF = config.getString("bloodEffectOtherOff");
 
         RTUUtilAPI.getFileManager().copyResource("Translations", "Locale_EN.yml");
         RTUUtilAPI.getFileManager().copyResource("Translations", "Locale_KR.yml");
@@ -210,8 +218,10 @@ public class ConfigManager {
 
     private void initMobMaterial(File file) {
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-        for (String group : config.getConfigurationSection("list").getKeys(false)) {
-            mobMaterial.put(group, config.getConfigurationSection("list").getString("." + group));
+        if (config.getConfigurationSection("list") != null) {
+            for (String group : config.getConfigurationSection("list").getKeys(false)) {
+                mobMaterial.put(group, config.getConfigurationSection("list").getString("." + group));
+            }
         }
     }
 

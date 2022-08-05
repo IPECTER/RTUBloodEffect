@@ -1,3 +1,4 @@
+#if Empty, Plugin uses default prefix
 prefix: ""
 reloadMsg: "&aCompleted reloading config"
 commandWrongUsage: "&cWrong Usage&7, &fUse /rtucc on&7/&foff"

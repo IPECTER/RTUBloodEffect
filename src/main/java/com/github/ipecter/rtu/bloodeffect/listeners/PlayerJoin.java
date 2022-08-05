@@ -16,10 +16,10 @@ public class PlayerJoin implements Listener {
         if (!configManager.isEnablePlugin()) return;
         Player player = e.getPlayer();
         if (configManager.isMotd()) {
-            player.sendMessage(RTUUtilAPI.getTextManager().formatted(player, configManager.getPrefix() + "&fRTU CommandControl developed by IPECTER"));
+            player.sendMessage(RTUUtilAPI.getTextManager().formatted(player, configManager.getPrefix() + "&fRTU BloodEffect developed by IPECTER & Mkkas3145 (Original)"));
         } else {
             if (player.isOp())
-                player.sendMessage(RTUUtilAPI.getTextManager().formatted(player, configManager.getPrefix() + "&fRTU CommandControl developed by IPECTER"));
+                player.sendMessage(RTUUtilAPI.getTextManager().formatted(player, configManager.getPrefix() + "&fRTU BloodEffect developed by IPECTER & Mkkas3145 (Original)"));
         }
     }
 }

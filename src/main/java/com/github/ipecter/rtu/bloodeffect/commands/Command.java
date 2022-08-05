@@ -1,5 +1,6 @@
 package com.github.ipecter.rtu.bloodeffect.commands;
 
+import com.github.ipecter.rtu.bloodeffect.RTUBloodEffect;
 import com.github.ipecter.rtu.bloodeffect.managers.ConfigManager;
 import com.github.ipecter.rtu.utilapi.RTUUtilAPI;
 import com.github.ipecter.rtu.utilapi.managers.TextManager;
@@ -8,7 +9,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.PermissionAttachment;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -63,19 +66,29 @@ public class Command implements CommandExecutor, TabCompleter {
             }
             return true;
         } else {
-            sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getPrefix() + configManager.getCommandWrongUsage()));
+            if (sender.hasPermission("rtube.reload")) {
+                sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getPrefix() + configManager.getCommandWrongUsageOp()));
+
+            } else {
+                sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getPrefix() + configManager.getCommandWrongUsage()));
+            }
             return true;
         }
     }
 
     private void setStatus(Player player, boolean value) {
-        RTUUtilAPI.getPermissionManager().setPerm(player, "rtube.status", value);
+        setPerm(player, "rtube.status", value);
+    }
+
+    public void setPerm(Player player, String node, boolean value) {
+        PermissionAttachment attachment = player.addAttachment(RTUBloodEffect.getPlugin(RTUBloodEffect.class));
+        attachment.setPermission(node, value);
     }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, org.bukkit.command.Command command, String alias, String[] args) {
         if (args.length == 1) {
-            List<String> list = Arrays.asList();
+            List<String> list = new ArrayList<>();
             if (sender.hasPermission("rtube.reload")) {
                 list.add("reload");
             }

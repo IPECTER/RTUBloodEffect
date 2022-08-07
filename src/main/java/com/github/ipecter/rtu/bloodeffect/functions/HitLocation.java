@@ -1,5 +1,6 @@
 package com.github.ipecter.rtu.bloodeffect.functions;
 
+import com.github.ipecter.rtu.bloodeffect.managers.StatusManager;
 import org.bukkit.*;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
@@ -75,7 +76,7 @@ public class HitLocation {
     public static final void particle(World world, Location hitlocation, Integer amount, Material material) {
         BlockData blockCrackData = material.createBlockData();
         for (Player player : Bukkit.getOnlinePlayers()) {
-            if (player.getWorld() == world && player.hasPermission("rtube.use") && player.hasPermission("rtube.status")) {
+            if (player.getWorld() == world && player.hasPermission("rtube.use") && StatusManager.getInstance().getStatus(player)) {
                 player.spawnParticle(Particle.BLOCK_CRACK, hitlocation.getX(), hitlocation.getY(), hitlocation.getZ(), amount.intValue(), blockCrackData);
             }
         }

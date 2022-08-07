@@ -14,6 +14,17 @@ import java.util.Map;
 
 public class ConfigManager {
 
+    public ConfigManager() {
+    }
+
+    public final static ConfigManager getInstance() {
+        return ConfigManager.InnerInstanceClass.instance;
+    }
+
+    private static class InnerInstanceClass {
+        private static final ConfigManager instance = new ConfigManager();
+    }
+
     private Plugin plugin = RTUBloodEffect.getPlugin(RTUBloodEffect.class);
     private boolean enablePlugin = true;
     private boolean motd = true;
@@ -33,13 +44,6 @@ public class ConfigManager {
     private String bloodEffectOFF = "";
     private String bloodEffectOtherON = "";
     private String bloodEffectOtherOFF = "";
-
-    public ConfigManager() {
-    }
-
-    public final static ConfigManager getInstance() {
-        return ConfigManager.InnerInstanceClass.instance;
-    }
 
     public boolean isEnablePlugin() {
         return enablePlugin;
@@ -223,9 +227,5 @@ public class ConfigManager {
                 mobMaterial.put(group, config.getConfigurationSection("list").getString("." + group));
             }
         }
-    }
-
-    private static class InnerInstanceClass {
-        private static final ConfigManager instance = new ConfigManager();
     }
 }

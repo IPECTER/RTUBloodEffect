@@ -1,7 +1,7 @@
 package com.github.ipecter.rtu.bloodeffect.commands;
 
-import com.github.ipecter.rtu.bloodeffect.RTUBloodEffect;
 import com.github.ipecter.rtu.bloodeffect.managers.ConfigManager;
+import com.github.ipecter.rtu.bloodeffect.managers.StatusManager;
 import com.github.ipecter.rtu.utilapi.RTUUtilAPI;
 import com.github.ipecter.rtu.utilapi.managers.TextManager;
 import org.bukkit.Bukkit;
@@ -9,7 +9,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.permissions.PermissionAttachment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,12 +76,7 @@ public class Command implements CommandExecutor, TabCompleter {
     }
 
     private void setStatus(Player player, boolean value) {
-        setPerm(player, "rtube.status", value);
-    }
-
-    public void setPerm(Player player, String node, boolean value) {
-        PermissionAttachment attachment = player.addAttachment(RTUBloodEffect.getPlugin(RTUBloodEffect.class));
-        attachment.setPermission(node, value);
+        StatusManager.getInstance().setStatus(player, value);
     }
 
     @Override

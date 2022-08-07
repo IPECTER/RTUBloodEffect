@@ -1,7 +1,6 @@
 package com.github.ipecter.rtu.bloodeffect.commands;
 
 import com.github.ipecter.rtu.bloodeffect.managers.ConfigManager;
-import com.github.ipecter.rtu.bloodeffect.managers.StatusManager;
 import com.github.ipecter.rtu.utilapi.RTUUtilAPI;
 import com.github.ipecter.rtu.utilapi.managers.TextManager;
 import org.bukkit.Bukkit;
@@ -76,7 +75,7 @@ public class Command implements CommandExecutor, TabCompleter {
     }
 
     private void setStatus(Player player, boolean value) {
-        StatusManager.getInstance().setStatus(player, value);
+        RTUUtilAPI.getStatusManager().setStatus(player, value);
     }
 
     @Override

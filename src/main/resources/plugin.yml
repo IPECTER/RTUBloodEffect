@@ -22,4 +22,4 @@ permissions:
     default: true
   rtube.toggle.other:
     description: Other Player Blood Effect Toggle
-    default: true
+    default: op

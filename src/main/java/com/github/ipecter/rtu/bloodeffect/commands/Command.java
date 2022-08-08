@@ -92,7 +92,9 @@ public class Command implements CommandExecutor, TabCompleter {
             }
             return list;
         } else if (args.length == 2) {
-            return Bukkit.getOnlinePlayers().stream().map(player -> player.getName()).collect(Collectors.toList());
+            if (sender.hasPermission("rtupd.toggle.other")) {
+                return Bukkit.getOnlinePlayers().stream().map(player -> player.getName()).collect(Collectors.toList());
+            }
         }
         return Arrays.asList();
     }

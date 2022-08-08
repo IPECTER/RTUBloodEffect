@@ -76,7 +76,7 @@ public class HitLocation {
     public static final void particle(World world, Location hitlocation, Integer amount, Material material) {
         BlockData blockCrackData = material.createBlockData();
         for (Player player : Bukkit.getOnlinePlayers()) {
-            if (player.getWorld() == world && player.hasPermission("rtube.use") && (boolean) RTUUtilAPI.getStatusManager().getStatus(player)) {
+            if (player.getWorld() == world && player.hasPermission("rtube.use") && Boolean.valueOf(RTUUtilAPI.getStatusManager().getStatus(player, "status"))) {
                 player.spawnParticle(Particle.BLOCK_CRACK, hitlocation.getX(), hitlocation.getY(), hitlocation.getZ(), amount.intValue(), blockCrackData);
             }
         }

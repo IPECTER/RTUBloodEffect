@@ -75,7 +75,7 @@ public class Command implements CommandExecutor, TabCompleter {
     }
 
     private void setStatus(Player player, boolean value) {
-        RTUUtilAPI.getStatusManager().setStatus(player, value);
+        RTUUtilAPI.getStatusManager().setStatus(player, "status", value);
     }
 
     @Override

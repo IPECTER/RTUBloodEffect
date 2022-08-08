@@ -1,5 +1,6 @@
 package com.github.ipecter.rtu.bloodeffect.commands;
 
+import com.github.ipecter.rtu.bloodeffect.managers.BloodStatusManager;
 import com.github.ipecter.rtu.bloodeffect.managers.ConfigManager;
 import com.github.ipecter.rtu.utilapi.RTUUtilAPI;
 import com.github.ipecter.rtu.utilapi.managers.TextManager;
@@ -75,7 +76,7 @@ public class Command implements CommandExecutor, TabCompleter {
     }
 
     private void setStatus(Player player, boolean value) {
-        RTUUtilAPI.getStatusManager().setStatus(player, "status", value);
+        BloodStatusManager.getInstance().setStatus(player, value);
     }
 
     @Override

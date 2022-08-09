@@ -15,7 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class RTUBloodEffect extends JavaPlugin {
 
-    private String prefix = IridiumColorAPI.process("<GRADIENT:a83232>[ RTUBloodEffect ]</GRADIENT:a3a3a3> ");
+    private String prefix = IridiumColorAPI.process("<GRADIENT:cc1f1f>[ RTUBloodEffect ]</GRADIENT:a3a3a3> ");
 
 
     @Override

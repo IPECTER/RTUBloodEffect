@@ -1,7 +1,7 @@
 package com.github.ipecter.rtu.bloodeffect.managers;
 
 import com.github.ipecter.rtu.bloodeffect.RTUBloodEffect;
-import com.github.ipecter.rtu.utilapi.RTUUtilAPI;
+import com.github.ipecter.rtu.pluginlib.RTUPluginLib;
 import com.iridium.iridiumcolorapi.IridiumColorAPI;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -34,16 +34,7 @@ public class ConfigManager {
     private Material defaultMaterial = Material.REDSTONE_BLOCK;
     private String locale = "EN";
     private Map<String, String> mobMaterial = Collections.synchronizedMap(new HashMap<>());
-    private String prefix = IridiumColorAPI.process("<GRADIENT:a83232>[ RTUBloodEffect ]</GRADIENT:a3a3a3> ");
-    private String reloadMsg = "";
-    private String commandWrongUsage = "";
-    private String commandWrongUsageOp = "";
-    private String commandWrongUsageConsole = "";
-    private String noPermission = "";
-    private String bloodEffectON = "";
-    private String bloodEffectOFF = "";
-    private String bloodEffectOtherON = "";
-    private String bloodEffectOtherOFF = "";
+    private String prefix = IridiumColorAPI.process("<GRADIENT:cc1f1f>[ RTUBloodEffect ]</GRADIENT:a3a3a3> ");
 
     public boolean isEnablePlugin() {
         return enablePlugin;
@@ -105,90 +96,10 @@ public class ConfigManager {
         return mobMaterial;
     }
 
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
-
-    public String getReloadMsg() {
-        return reloadMsg;
-    }
-
-    public void setReloadMsg(String reloadMsg) {
-        this.reloadMsg = reloadMsg;
-    }
-
-    public String getCommandWrongUsage() {
-        return commandWrongUsage;
-    }
-
-    public void setCommandWrongUsage(String commandWrongUsage) {
-        this.commandWrongUsage = commandWrongUsage;
-    }
-
-    public String getCommandWrongUsageOp() {
-        return commandWrongUsageOp;
-    }
-
-    public void setCommandWrongUsageOp(String commandWrongUsageOp) {
-        this.commandWrongUsageOp = commandWrongUsageOp;
-    }
-
-    public String getCommandWrongUsageConsole() {
-        return commandWrongUsageConsole;
-    }
-
-    public void setCommandWrongUsageConsole(String commandWrongUsageConsole) {
-        this.commandWrongUsageConsole = commandWrongUsageConsole;
-    }
-
-    public String getNoPermission() {
-        return noPermission;
-    }
-
-    public void setNoPermission(String noPermission) {
-        this.noPermission = noPermission;
-    }
-
-    public String getBloodEffectON() {
-        return bloodEffectON;
-    }
-
-    public void setBloodEffectON(String bloodEffectON) {
-        this.bloodEffectON = bloodEffectON;
-    }
-
-    public String getBloodEffectOFF() {
-        return bloodEffectOFF;
-    }
-
-    public void setBloodEffectOFF(String bloodEffectOFF) {
-        this.bloodEffectOFF = bloodEffectOFF;
-    }
-
-    public String getBloodEffectOtherON() {
-        return bloodEffectOtherON;
-    }
-
-    public void setBloodEffectOtherON(String bloodEffectOtherON) {
-        this.bloodEffectOtherON = bloodEffectOtherON;
-    }
-
-    public String getBloodEffectOtherOFF() {
-        return bloodEffectOtherOFF;
-    }
-
-    public void setBloodEffectOtherOFF(String bloodEffectOtherOFF) {
-        this.bloodEffectOtherOFF = bloodEffectOtherOFF;
-    }
-
     public void initConfigFiles() {
-        initSetting(RTUUtilAPI.getFileManager().copyResource("Setting.yml"));
-        initMessage(RTUUtilAPI.getFileManager().copyResource("Translations", "Locale_" + locale + ".yml"));
-        initMobMaterial(RTUUtilAPI.getFileManager().copyResource("MobMaterial.yml"));
+        initSetting(RTUPluginLib.getFileManager().copyResource("Setting.yml"));
+        initMessage(RTUPluginLib.getFileManager().copyResource("Translations", "Locale_" + locale + ".yml"));
+        initMobMaterial(RTUPluginLib.getFileManager().copyResource("MobMaterial.yml"));
     }
 
     private void initSetting(File file) {
@@ -205,19 +116,16 @@ public class ConfigManager {
 
     private void initMessage(File file) {
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-        prefix = config.getString("prefix", "").isEmpty() ? prefix : config.getString("prefix");
-        reloadMsg = config.getString("reloadMsg");
-        commandWrongUsage = config.getString("commandWrongUsage");
-        commandWrongUsageOp = config.getString("commandWrongUsageOp");
-        commandWrongUsageConsole = config.getString("commandWrongUsageConsole");
-        noPermission = config.getString("noPermission");
-        bloodEffectON = config.getString("bloodEffectOn");
-        bloodEffectOFF = config.getString("bloodEffectOff");
-        bloodEffectOtherON = config.getString("bloodEffectOtherOn");
-        bloodEffectOtherOFF = config.getString("bloodEffectOtherOff");
+        for (String key : config.getKeys(false)) {
+            if (key.equals("prefix")) {
+                msgKeyMap.put(key, config.getString("prefix", "").isEmpty() ? prefix : config.getString("prefix"));
+            } else {
+                msgKeyMap.put(key, config.getString(key));
+            }
+        }
 
-        RTUUtilAPI.getFileManager().copyResource("Translations", "Locale_EN.yml");
-        RTUUtilAPI.getFileManager().copyResource("Translations", "Locale_KR.yml");
+        RTUPluginLib.getFileManager().copyResource("Translations", "Locale_EN.yml");
+        RTUPluginLib.getFileManager().copyResource("Translations", "Locale_KR.yml");
     }
 
     private void initMobMaterial(File file) {
@@ -227,5 +135,11 @@ public class ConfigManager {
                 mobMaterial.put(group, config.getConfigurationSection("list").getString("." + group));
             }
         }
+    }
+
+    private Map<String, String> msgKeyMap = Collections.synchronizedMap(new HashMap<>());
+
+    public String getTranslation(String key) {
+        return msgKeyMap.getOrDefault(key, "");
     }
 }

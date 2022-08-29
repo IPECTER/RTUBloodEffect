@@ -1,7 +1,7 @@
 package com.github.ipecter.rtu.bloodeffect.listeners;
 
 import com.github.ipecter.rtu.bloodeffect.managers.ConfigManager;
-import com.github.ipecter.rtu.utilapi.RTUUtilAPI;
+import com.github.ipecter.rtu.pluginlib.RTUPluginLib;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,10 +16,10 @@ public class PlayerJoin implements Listener {
         if (!configManager.isEnablePlugin()) return;
         Player player = e.getPlayer();
         if (configManager.isMotd()) {
-            player.sendMessage(RTUUtilAPI.getTextManager().formatted(player, configManager.getPrefix() + "&fRTU BloodEffect developed by IPECTER & Mkkas3145 (Original)"));
+            player.sendMessage(RTUPluginLib.getTextManager().formatted(player, configManager.getTranslation("prefix") + "&fRTU BloodEffect developed by IPECTER & Mkkas3145 (Original)"));
         } else {
             if (player.isOp())
-                player.sendMessage(RTUUtilAPI.getTextManager().formatted(player, configManager.getPrefix() + "&fRTU BloodEffect developed by IPECTER & Mkkas3145 (Original)"));
+                player.sendMessage(RTUPluginLib.getTextManager().formatted(player, configManager.getTranslation("prefix") + "&fRTU BloodEffect developed by IPECTER & Mkkas3145 (Original)"));
         }
     }
 }

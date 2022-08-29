@@ -8,7 +8,7 @@ import com.github.ipecter.rtu.bloodeffect.listeners.PlayerJoin;
 import com.github.ipecter.rtu.bloodeffect.listeners.ProjectileHit;
 import com.github.ipecter.rtu.bloodeffect.managers.ConfigManager;
 import com.github.ipecter.rtu.bloodeffect.packet.BloodHeartParticle;
-import com.github.ipecter.rtu.utilapi.RTUUtilAPI;
+import com.github.ipecter.rtu.pluginlib.RTUPluginLib;
 import com.iridium.iridiumcolorapi.IridiumColorAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,8 +21,8 @@ public final class RTUBloodEffect extends JavaPlugin {
     @Override
     public void onEnable() {
         try {
-            RTUUtilAPI.init(this);
-            Bukkit.getLogger().info(RTUUtilAPI.getTextManager().formatted(prefix + "&aEnable&f!"));
+            RTUPluginLib.init(this);
+            Bukkit.getLogger().info(RTUPluginLib.getTextManager().formatted(prefix + "&aEnable&f!"));
             ConfigManager.getInstance().initConfigFiles();
             registerEvent();
             setExecutor();
@@ -35,7 +35,7 @@ public final class RTUBloodEffect extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        Bukkit.getLogger().info(RTUUtilAPI.getTextManager().formatted(prefix + "&cDisable&f!"));
+        Bukkit.getLogger().info(RTUPluginLib.getTextManager().formatted(prefix + "&cDisable&f!"));
     }
 
     protected void registerEvent() {
@@ -57,7 +57,7 @@ public final class RTUBloodEffect extends JavaPlugin {
 
     private void loadProtocolLib() {
         if (Bukkit.getPluginManager().getPlugin("ProtocolLib") != null) {
-            RTUUtilAPI.getDependencyManager().setUseProtocolLib(true);
+            RTUPluginLib.getDependencyManager().setUseProtocolLib(true);
             protocolManager = ProtocolLibrary.getProtocolManager();
             protocolManager.addPacketListener(new BloodHeartParticle(this));
         }
@@ -65,7 +65,7 @@ public final class RTUBloodEffect extends JavaPlugin {
 
     private void loadPAPI() {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            RTUUtilAPI.getDependencyManager().setUsePAPI(true);
+            RTUPluginLib.getDependencyManager().setUsePAPI(true);
         }
     }
 }

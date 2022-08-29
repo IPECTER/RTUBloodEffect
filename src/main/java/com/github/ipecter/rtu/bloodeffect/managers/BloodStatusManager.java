@@ -1,6 +1,6 @@
 package com.github.ipecter.rtu.bloodeffect.managers;
 
-import com.github.ipecter.rtu.utilapi.RTUUtilAPI;
+import com.github.ipecter.rtu.pluginlib.RTUPluginLib;
 import org.bukkit.entity.Player;
 
 import java.util.Collections;
@@ -23,7 +23,7 @@ public class BloodStatusManager {
         UUID uuid = player.getUniqueId();
         Boolean result = playerCache.get(uuid);
         if (result == null) {
-            String value = RTUUtilAPI.getStatusManager().getStatus(player, "status");
+            String value = RTUPluginLib.getStatusManager().getStatus(player, "status");
             result = value != null ? Boolean.valueOf(value) : Boolean.TRUE;
             playerCache.put(uuid, result);
         }
@@ -31,7 +31,7 @@ public class BloodStatusManager {
     }
 
     public void setStatus(Player player, boolean value) {
-        RTUUtilAPI.getStatusManager().setStatus(player, "status", value);
+        RTUPluginLib.getStatusManager().setStatus(player, "status", value);
         playerCache.put(player.getUniqueId(), value);
     }
 

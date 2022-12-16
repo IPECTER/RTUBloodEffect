@@ -14,9 +14,6 @@ import java.util.Map;
 
 public class ConfigManager {
 
-    public ConfigManager() {
-    }
-
     public final static ConfigManager getInstance() {
         return ConfigManager.InnerInstanceClass.instance;
     }
@@ -96,12 +93,6 @@ public class ConfigManager {
         return mobMaterial;
     }
 
-    public void initConfigFiles() {
-        initSetting(RTUPluginLib.getFileManager().copyResource("Setting.yml"));
-        initMessage(RTUPluginLib.getFileManager().copyResource("Translations", "Locale_" + locale + ".yml"));
-        initMobMaterial(RTUPluginLib.getFileManager().copyResource("MobMaterial.yml"));
-    }
-
     private void initSetting(File file) {
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
         enablePlugin = config.getBoolean("enablePlugin");
@@ -112,6 +103,12 @@ public class ConfigManager {
         defaultMaterial = material != null ? material : Material.REDSTONE;
         accuracy = config.getDouble("particle.accuracy");
         amount = config.getInt("particle.amount");
+    }
+
+    public void initConfigFiles() {
+        initSetting(RTUPluginLib.getFileManager().copyResource("Setting.yml"));
+        initMessage(RTUPluginLib.getFileManager().copyResource("Translations", "Locale_" + locale + ".yml"));
+        initMobMaterial(RTUPluginLib.getFileManager().copyResource("MobMaterial.yml"));
     }
 
     private void initMessage(File file) {

@@ -21,20 +21,22 @@ public class ProjectileHit implements Listener {
     @EventHandler
     public void onProjectileHit(ProjectileHitEvent e) {
         if (!configManager.isEnablePlugin()) return;
-        if (e.getHitEntity() != null && e.getHitEntity() instanceof LivingEntity) {
-            Location hitlocation = HitLocation.getHitLocation_Projectile((Entity) e.getEntity(), e.getHitEntity(), Double.valueOf(configManager.getAccuracy()));
+        Entity victim = e.getHitEntity();
+        Entity attacker = (Entity) e.getEntity().getShooter();
+        if (victim != null && victim instanceof LivingEntity) {
+            Location hitlocation = HitLocation.getHitLocation_Attack((LivingEntity) attacker, (LivingEntity) victim, Double.valueOf(configManager.getAccuracy()));
             if (hitlocation != null) {
                 Material material = configManager.getDefaultMaterial();
                 Map<String, String> mobMaterial = configManager.getMobMaterial();
-                String entityTypeName = e.getEntity().getType().toString();
+                String entityTypeName = victim.getType().toString();
                 if (mobMaterial.keySet().contains(entityTypeName)) {
                     Material findMaterial = Material.getMaterial(mobMaterial.get(entityTypeName));
                     material = findMaterial != null ? findMaterial : material;
                 }
-                BloodEvent event = new BloodEvent(e.getEntity(), e.getHitEntity(), hitlocation, material);
+                BloodEvent event = new BloodEvent(attacker, victim, hitlocation, material);
                 Bukkit.getPluginManager().callEvent(event);
                 if (!event.isCancelled())
-                    HitLocation.particle(e.getEntity().getWorld(), hitlocation, Integer.valueOf(configManager.getAmount()), material);
+                    HitLocation.particle(victim.getWorld(), hitlocation, Integer.valueOf(configManager.getAmount()), material);
             }
         }
     }

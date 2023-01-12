@@ -29,7 +29,7 @@ public class EntityDamageByEntity implements Listener {
             if (hitlocation != null) {
                 Material material = configManager.getDefaultMaterial();
                 Map<String, String> mobMaterial = configManager.getMobMaterial();
-                String entityTypeName = e.getEntity().getType().toString();
+                String entityTypeName = victim.getType().toString();
                 if (mobMaterial.keySet().contains(entityTypeName)) {
                     Material findMaterial = Material.getMaterial(mobMaterial.get(entityTypeName));
                     material = findMaterial != null ? findMaterial : material;
@@ -37,7 +37,7 @@ public class EntityDamageByEntity implements Listener {
                 BloodEvent event = new BloodEvent(attacker, victim, hitlocation, material);
                 Bukkit.getPluginManager().callEvent(event);
                 if (!event.isCancelled())
-                    HitLocation.particle(e.getEntity().getWorld(), hitlocation, Integer.valueOf(configManager.getAmount()), material);
+                    HitLocation.particle(victim.getWorld(), hitlocation, Integer.valueOf(configManager.getAmount()), material);
             }
         }
     }

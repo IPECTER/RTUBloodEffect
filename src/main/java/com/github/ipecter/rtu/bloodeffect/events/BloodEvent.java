@@ -1,5 +1,7 @@
 package com.github.ipecter.rtu.bloodeffect.events;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -9,14 +11,23 @@ import org.bukkit.event.HandlerList;
 
 
 public class BloodEvent extends Event implements Cancellable {
+
     private static final HandlerList handlers = new HandlerList();
 
+    @Getter
+    @Setter
     private Entity attacker;
 
+    @Getter
+    @Setter
     private Entity victim;
 
+    @Getter
+    @Setter
     private Location bloodloc;
 
+    @Getter
+    @Setter
     private Material material;
 
     private boolean isCancelled;
@@ -26,22 +37,6 @@ public class BloodEvent extends Event implements Cancellable {
         this.victim = victim;
         this.bloodloc = bloodloc;
         this.material = material;
-    }
-
-    public Entity getAttacker() {
-        return this.attacker;
-    }
-
-    public Entity getVictim() {
-        return this.victim;
-    }
-
-    public Location getBloodLocation() {
-        return this.bloodloc;
-    }
-
-    public Material getMaterial() {
-        return this.material;
     }
 
     public HandlerList getHandlers() {

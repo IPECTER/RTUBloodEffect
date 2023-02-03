@@ -3,6 +3,8 @@ package com.github.ipecter.rtu.bloodeffect.managers;
 import com.github.ipecter.rtu.bloodeffect.RTUBloodEffect;
 import com.github.ipecter.rtu.pluginlib.RTUPluginLib;
 import com.iridium.iridiumcolorapi.IridiumColorAPI;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -22,76 +24,40 @@ public class ConfigManager {
         private static final ConfigManager instance = new ConfigManager();
     }
 
-    private Plugin plugin = RTUBloodEffect.getPlugin(RTUBloodEffect.class);
-    private boolean enablePlugin = true;
-    private boolean motd = true;
-    private boolean particleDisableVanillaDamage = true;
-    private int amount = 0;
-    private double accuracy = 0.5;
-    private Material defaultMaterial = Material.REDSTONE_BLOCK;
-    private String locale = "EN";
-    private Map<String, String> mobMaterial = Collections.synchronizedMap(new HashMap<>());
     private String prefix = IridiumColorAPI.process("<GRADIENT:cc1f1f>[ RTUBloodEffect ]</GRADIENT:a3a3a3> ");
+    private Plugin plugin = RTUBloodEffect.getPlugin(RTUBloodEffect.class);
 
-    public boolean isEnablePlugin() {
-        return enablePlugin;
-    }
+    @Getter
+    @Setter
+    private boolean enablePlugin = true;
 
-    public void setEnablePlugin(boolean enablePlugin) {
-        this.enablePlugin = enablePlugin;
-    }
+    @Getter
+    @Setter
+    private boolean motd = true;
 
-    public boolean isMotd() {
-        return motd;
-    }
+    @Getter
+    @Setter
+    private boolean particleDisableVanillaDamage = true;
 
-    public void setMotd(boolean motd) {
-        this.motd = motd;
-    }
+    @Getter
+    @Setter
+    private int amount = 0;
 
-    public int getAmount() {
-        return amount;
-    }
+    @Getter
+    @Setter
+    private double accuracy = 0.5;
 
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
+    @Getter
+    @Setter
+    private Material defaultMaterial = Material.REDSTONE_BLOCK;
 
-    public double getAccuracy() {
-        return accuracy;
-    }
+    @Getter
+    @Setter
+    private String locale = "EN";
 
-    public void setAccuracy(double accuracy) {
-        this.accuracy = accuracy;
-    }
-
-    public Material getDefaultMaterial() {
-        return defaultMaterial;
-    }
-
-    public void setDefaultMaterial(Material defaultMaterial) {
-        this.defaultMaterial = defaultMaterial;
-    }
-
-    public String getLocale() {
-        return locale;
-    }
-
-    public void setLocale(String locale) {
-        this.locale = locale;
-    }
-
-    public boolean isParticleDisableVanillaDamage() {
-        return particleDisableVanillaDamage;
-    }
-
-    public void setParticleDisableVanillaDamage(boolean particleDisableVanillaDamage) {
-        this.particleDisableVanillaDamage = particleDisableVanillaDamage;
-    }
-
-    public Map<String, String> getMobMaterial() {
-        return mobMaterial;
-    }
+    @Getter
+    @Setter
+    private Map<String, String> mobMaterial = Collections.synchronizedMap(new HashMap<>());
 
     private void initSetting(File file) {
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);

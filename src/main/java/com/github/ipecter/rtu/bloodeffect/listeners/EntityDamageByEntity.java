@@ -25,19 +25,19 @@ public class EntityDamageByEntity implements Listener {
         Entity victim = e.getEntity();
         Entity attacker = e.getDamager();
         if (!(attacker instanceof Projectile) && attacker instanceof LivingEntity && victim instanceof LivingEntity) {
-            Location hitlocation = HitLocation.getHitLocation_Attack((LivingEntity) attacker, (LivingEntity) victim, Double.valueOf(configManager.getAccuracy()));
+            Location hitlocation = HitLocation.getHitLocation_Attack((LivingEntity) attacker, (LivingEntity) victim, configManager.getAccuracy());
             if (hitlocation != null) {
                 Material material = configManager.getDefaultMaterial();
                 Map<String, String> mobMaterial = configManager.getMobMaterial();
                 String entityTypeName = victim.getType().toString();
-                if (mobMaterial.keySet().contains(entityTypeName)) {
+                if (mobMaterial.containsKey(entityTypeName)) {
                     Material findMaterial = Material.getMaterial(mobMaterial.get(entityTypeName));
                     material = findMaterial != null ? findMaterial : material;
                 }
                 BloodEvent event = new BloodEvent(attacker, victim, hitlocation, material);
                 Bukkit.getPluginManager().callEvent(event);
                 if (!event.isCancelled())
-                    HitLocation.particle(victim.getWorld(), hitlocation, Integer.valueOf(configManager.getAmount()), material);
+                    HitLocation.particle(victim.getWorld(), hitlocation, configManager.getAmount(), material);
             }
         }
     }

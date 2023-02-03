@@ -22,21 +22,20 @@ public class ProjectileHit implements Listener {
     public void onProjectileHit(ProjectileHitEvent e) {
         if (!configManager.isEnablePlugin()) return;
         Entity victim = e.getHitEntity();
-        Entity attacker = (Entity) e.getEntity().getShooter();
-        if (victim != null && victim instanceof LivingEntity) {
-            Location hitlocation = HitLocation.getHitLocation_Attack((LivingEntity) attacker, (LivingEntity) victim, Double.valueOf(configManager.getAccuracy()));
+        if (victim instanceof LivingEntity) {
+            Location hitlocation = HitLocation.getHitLocation_Projectile(e.getEntity(), (LivingEntity) victim, configManager.getAccuracy());
             if (hitlocation != null) {
                 Material material = configManager.getDefaultMaterial();
                 Map<String, String> mobMaterial = configManager.getMobMaterial();
                 String entityTypeName = victim.getType().toString();
-                if (mobMaterial.keySet().contains(entityTypeName)) {
+                if (mobMaterial.containsKey(entityTypeName)) {
                     Material findMaterial = Material.getMaterial(mobMaterial.get(entityTypeName));
                     material = findMaterial != null ? findMaterial : material;
                 }
-                BloodEvent event = new BloodEvent(attacker, victim, hitlocation, material);
+                BloodEvent event = new BloodEvent(e.getEntity(), victim, hitlocation, material);
                 Bukkit.getPluginManager().callEvent(event);
                 if (!event.isCancelled())
-                    HitLocation.particle(victim.getWorld(), hitlocation, Integer.valueOf(configManager.getAmount()), material);
+                    HitLocation.particle(victim.getWorld(), hitlocation, configManager.getAmount(), material);
             }
         }
     }

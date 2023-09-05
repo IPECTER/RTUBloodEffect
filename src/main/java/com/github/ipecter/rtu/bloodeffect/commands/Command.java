@@ -4,6 +4,8 @@ import com.github.ipecter.rtu.bloodeffect.managers.BloodStatusManager;
 import com.github.ipecter.rtu.bloodeffect.managers.ConfigManager;
 import com.github.ipecter.rtu.pluginlib.RTUPluginLib;
 import com.github.ipecter.rtu.pluginlib.managers.TextManager;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,25 +27,25 @@ public class Command implements CommandExecutor, TabCompleter {
         if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
             if (sender.hasPermission("rtube.reload")) {
                 configManager.initConfigFiles();
-                sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + configManager.getTranslation("reloadMsg")));
+                ((Audience) sender).sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + configManager.getTranslation("reloadMsg")));
             } else {
-                sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + configManager.getTranslation("noPermission")));
+                ((Audience) sender).sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + configManager.getTranslation("noPermission")));
             }
             return true;
         } else if (args.length >= 1 && args[0].equalsIgnoreCase("on")) {
             if (args.length >= 2 && Bukkit.getPlayer(args[1]) != null) {
                 if (sender.hasPermission("rtube.toggle.other")) {
                     setStatus(Bukkit.getPlayer(args[1]), true);
-                    sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + "&f" + args[1] + configManager.getTranslation("bloodEffectOtherOn")));
+                    ((Audience) sender).sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + "&f" + args[1] + configManager.getTranslation("bloodEffectOtherOn")));
                 } else {
-                    sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + configManager.getTranslation("noPermission")));
+                    ((Audience) sender).sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + configManager.getTranslation("noPermission")));
                 }
             } else {
                 if (sender instanceof Player) {
                     setStatus((Player) sender, true);
-                    sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + configManager.getTranslation("bloodEffectOn")));
+                    ((Audience) sender).sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + configManager.getTranslation("bloodEffectOn")));
                 } else {
-                    sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + configManager.getTranslation("commandWrongUsageConsole")));
+                    ((Audience) sender).sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + configManager.getTranslation("commandWrongUsageConsole")));
                 }
             }
             return true;
@@ -51,25 +53,25 @@ public class Command implements CommandExecutor, TabCompleter {
             if (args.length >= 2 && Bukkit.getPlayer(args[1]) != null) {
                 if (sender.hasPermission("rtube.toggle.other")) {
                     setStatus(Bukkit.getPlayer(args[1]), false);
-                    sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + "&f" + args[1] + configManager.getTranslation("bloodEffectOtherOff")));
+                    ((Audience) sender).sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + "&f" + args[1] + configManager.getTranslation("bloodEffectOtherOff")));
                 } else {
-                    sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + configManager.getTranslation("noPermission")));
+                    ((Audience) sender).sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + configManager.getTranslation("noPermission")));
                 }
             } else {
                 if (sender instanceof Player) {
                     setStatus((Player) sender, false);
-                    sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + configManager.getTranslation("bloodEffectOff")));
+                    ((Audience) sender).sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + configManager.getTranslation("bloodEffectOff")));
                 } else {
-                    sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + configManager.getTranslation("commandWrongUsageConsole")));
+                    ((Audience) sender).sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + configManager.getTranslation("commandWrongUsageConsole")));
                 }
             }
             return true;
         } else {
             if (sender.hasPermission("rtube.reload")) {
-                sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + configManager.getTranslation("commandWrongUsageOp")));
+                ((Audience) sender).sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + configManager.getTranslation("commandWrongUsageOp")));
 
             } else {
-                sender.sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + configManager.getTranslation("commandWrongUsage")));
+                ((Audience) sender).sendMessage(textManager.formatted(sender instanceof Player ? (Player) sender : null, configManager.getTranslation("prefix") + configManager.getTranslation("commandWrongUsage")));
             }
             return true;
         }

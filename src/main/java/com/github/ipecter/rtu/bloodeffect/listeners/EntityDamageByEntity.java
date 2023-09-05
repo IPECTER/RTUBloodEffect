@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class EntityDamageByEntity implements Listener {
 
-    private ConfigManager configManager = ConfigManager.getInstance();
+    private final ConfigManager configManager = ConfigManager.getInstance();
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
@@ -26,19 +26,18 @@ public class EntityDamageByEntity implements Listener {
         Entity attacker = e.getDamager();
         if (!(attacker instanceof Projectile) && attacker instanceof LivingEntity && victim instanceof LivingEntity) {
             Location hitlocation = HitLocation.getHitLocation_Attack((LivingEntity) attacker, (LivingEntity) victim, configManager.getAccuracy());
-            if (hitlocation != null) {
-                Material material = configManager.getDefaultMaterial();
-                Map<String, String> mobMaterial = configManager.getMobMaterial();
-                String entityTypeName = victim.getType().toString();
-                if (mobMaterial.containsKey(entityTypeName)) {
-                    Material findMaterial = Material.getMaterial(mobMaterial.get(entityTypeName));
-                    material = findMaterial != null ? findMaterial : material;
-                }
-                BloodEvent event = new BloodEvent(attacker, victim, hitlocation, material);
-                Bukkit.getPluginManager().callEvent(event);
-                if (!event.isCancelled())
-                    HitLocation.particle(victim.getWorld(), hitlocation, configManager.getAmount(), material);
+            if (hitlocation == null) hitlocation = victim.getBoundingBox().getCenter().toLocation(victim.getWorld());
+            Material material = configManager.getDefaultMaterial();
+            Map<String, String> mobMaterial = configManager.getMobMaterial();
+            String entityTypeName = victim.getType().toString();
+            if (mobMaterial.containsKey(entityTypeName)) {
+                Material findMaterial = Material.getMaterial(mobMaterial.get(entityTypeName));
+                material = findMaterial != null ? findMaterial : material;
             }
+            BloodEvent event = new BloodEvent(attacker, victim, hitlocation, material);
+            Bukkit.getPluginManager().callEvent(event);
+            if (!event.isCancelled())
+                HitLocation.particle(victim.getWorld(), hitlocation, configManager.getAmount(), material);
         }
     }
 }

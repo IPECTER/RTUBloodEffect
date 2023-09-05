@@ -9,20 +9,22 @@ import com.github.ipecter.rtu.bloodeffect.listeners.ProjectileHit;
 import com.github.ipecter.rtu.bloodeffect.managers.ConfigManager;
 import com.github.ipecter.rtu.bloodeffect.packet.BloodHeartParticle;
 import com.github.ipecter.rtu.pluginlib.RTUPluginLib;
-import com.iridium.iridiumcolorapi.IridiumColorAPI;
+import com.github.ipecter.rtu.pluginlib.managers.TextManager;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class RTUBloodEffect extends JavaPlugin {
 
-    private String prefix = IridiumColorAPI.process("<GRADIENT:cc1f1f>[ RTUBloodEffect ]</GRADIENT:a3a3a3> ");
+    public static final Component prefix = RTUPluginLib.getTextManager().colored("<gradient:cc1f1f:a3a3a3>[ RTUBloodEffect ]</gradient> ");
+    private final TextManager textManager = RTUPluginLib.getTextManager();
 
 
     @Override
     public void onEnable() {
         try {
             RTUPluginLib.init(this);
-            Bukkit.getLogger().info(RTUPluginLib.getTextManager().formatted(prefix + "&aEnable&f!"));
+            Bukkit.getLogger().info(textManager.toString(prefix.append(textManager.colored("<green>Enable</green>!"))));
             ConfigManager.getInstance().initConfigFiles();
             registerEvent();
             setExecutor();
@@ -35,7 +37,7 @@ public final class RTUBloodEffect extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        Bukkit.getLogger().info(RTUPluginLib.getTextManager().formatted(prefix + "&cDisable&f!"));
+        Bukkit.getLogger().info(textManager.toString(prefix.append(textManager.colored("<red>Disable</red>!"))));
     }
 
     protected void registerEvent() {

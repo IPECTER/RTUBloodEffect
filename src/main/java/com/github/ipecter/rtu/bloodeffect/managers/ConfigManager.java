@@ -2,9 +2,9 @@ package com.github.ipecter.rtu.bloodeffect.managers;
 
 import com.github.ipecter.rtu.bloodeffect.RTUBloodEffect;
 import com.github.ipecter.rtu.pluginlib.RTUPluginLib;
-import com.iridium.iridiumcolorapi.IridiumColorAPI;
 import lombok.Getter;
 import lombok.Setter;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -23,9 +23,6 @@ public class ConfigManager {
     private static class InnerInstanceClass {
         private static final ConfigManager instance = new ConfigManager();
     }
-
-    private String prefix = IridiumColorAPI.process("<GRADIENT:cc1f1f>[ RTUBloodEffect ]</GRADIENT:a3a3a3> ");
-    private Plugin plugin = RTUBloodEffect.getPlugin(RTUBloodEffect.class);
 
     @Getter
     @Setter
@@ -53,6 +50,10 @@ public class ConfigManager {
 
     @Getter
     @Setter
+    private boolean spawnParticleGeneral = true;
+
+    @Getter
+    @Setter
     private String locale = "EN";
 
     @Getter
@@ -67,6 +68,7 @@ public class ConfigManager {
         particleDisableVanillaDamage = config.getBoolean("particle.disableVanillaDamage");
         Material material = Material.getMaterial(config.getString("particle.defaultMaterial"));
         defaultMaterial = material != null ? material : Material.REDSTONE;
+        spawnParticleGeneral = config.getBoolean("spawnParticleGeneral", spawnParticleGeneral);
         accuracy = config.getDouble("particle.accuracy");
         amount = config.getInt("particle.amount");
     }
@@ -82,12 +84,12 @@ public class ConfigManager {
         msgKeyMap.clear();
         for (String key : config.getKeys(false)) {
             if (key.equals("prefix")) {
-                msgKeyMap.put(key, config.getString("prefix", "").isEmpty() ? prefix : config.getString("prefix"));
+                String prefixText = config.getString("prefix", "");
+                msgKeyMap.put(key, prefixText.isEmpty() ? MiniMessage.miniMessage().serialize(RTUBloodEffect.prefix) : prefixText);
             } else {
                 msgKeyMap.put(key, config.getString(key));
             }
         }
-
         RTUPluginLib.getFileManager().copyResource("Translations", "Locale_EN.yml");
         RTUPluginLib.getFileManager().copyResource("Translations", "Locale_KR.yml");
     }
@@ -102,7 +104,7 @@ public class ConfigManager {
         }
     }
 
-    private Map<String, String> msgKeyMap = Collections.synchronizedMap(new HashMap<>());
+    private final Map<String, String> msgKeyMap = Collections.synchronizedMap(new HashMap<>());
 
     public String getTranslation(String key) {
         return msgKeyMap.getOrDefault(key, "");

@@ -16,7 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class RTUBloodEffect extends JavaPlugin {
 
-    public static final Component prefix = RTUPluginLib.getTextManager().colored("<gradient:cc1f1f:a3a3a3>[ RTUBloodEffect ]</gradient> ");
+    public static final Component prefix = RTUPluginLib.getTextManager().colored("<gradient:#cc1f1f:#a3a3a3>[ RTUBloodEffect ]</gradient> ");
     private final TextManager textManager = RTUPluginLib.getTextManager();
 
 
